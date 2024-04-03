@@ -58,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
             if(R.id.item_3==no){ //HomePageFragment Button 1 (All logics are moved to Fragment instead of activity)
-                replaceFragment(new Home());
+                replaceFragment(new Profile());
                 return true;
             }
             else{ return false;}

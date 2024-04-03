@@ -29,11 +29,9 @@ import java.util.List;
 public class Home extends Fragment {
     FirebaseFirestore firestore;
     FirebaseAuth firebaseAuth;
-    Button logoutButton;
+//    Button logoutButton;
     public String currentEmail;
     List<String> listOfNames;
-
-
 
 
     @Override
@@ -43,15 +41,14 @@ public class Home extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         firestore= FirebaseFirestore.getInstance();
 
-        logoutButton = view.findViewById(R.id.buttonLogout);
-        logoutButton.setOnClickListener(v->{
-            logout();
-        });
+//        logoutButton = view.findViewById(R.id.buttonLogout);
+//        logoutButton.setOnClickListener(v->{
+//            logout();
+//        });
 
         HomeActivity homeActivity = (HomeActivity) getActivity();
         currentEmail = homeActivity.currentEmail;
         Log.d("Home_Fragment Email: ",currentEmail);
-
 
         //LOAD DATA FROM FIRESTORE OF ONBOARDERS ROLE = "ON"
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
