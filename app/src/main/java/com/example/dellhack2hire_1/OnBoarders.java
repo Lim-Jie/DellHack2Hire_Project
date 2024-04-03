@@ -15,22 +15,28 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
 public class OnBoarders extends Fragment {
+    private List<QueryDocumentSnapshot> queryDocumentSnapshots;
 
     public String emailVisit;
     FirebaseFirestore Firestore;
     private ListView listView;
+    private ListView prompt_listView;
     private List<Map<String, Object>> dataList;
+    private ArrayAdapter<String> promptAdapter;
 
     public OnBoarders( String emailVisit){
         this.emailVisit=emailVisit;
@@ -42,13 +48,17 @@ public class OnBoarders extends Fragment {
         View view=  inflater.inflate(R.layout.fragment_on_boarders, container, false);
         Firestore = FirebaseFirestore.getInstance();
 
-        Firestore = FirebaseFirestore.getInstance();
         listView = view.findViewById(R.id.listView);
+        prompt_listView=  view.findViewById(R.id.prompt_listView);
         dataList = new ArrayList<>();
+        queryDocumentSnapshots = new ArrayList<>();
 
-        loadDataFromFirestore();
+        loadUserDataFromFirestore();
 
 
+        promptAdapter = new ArrayAdapter<>(getContext(), R.layout.listview2);
+        searchForUser();
+        prompt_listView.setAdapter(promptAdapter);
 
 
 
@@ -58,7 +68,7 @@ public class OnBoarders extends Fragment {
         return view;
     }
 
-    private void loadDataFromFirestore() {
+    private void loadUserDataFromFirestore() {
         Firestore.collection("Users")
                 .document(emailVisit)
                 .get()
@@ -72,7 +82,6 @@ public class OnBoarders extends Fragment {
                                 Map<String, Object> data = document.getData();
                                 dataList.add(data);
                                 // Populate ListView
-                                System.out.println("TEST11"+dataList );
                                 populateListView();
                             } else {
                                 Log.d("Firestore", "No such document");
@@ -103,6 +112,37 @@ public class OnBoarders extends Fragment {
                 R.layout.listview2, displayList);
         listView.setAdapter(adapter);
     }
+
+    public void searchForUser() {
+        Firestore.collection("Prompts")
+                .whereEqualTo("AssigneeEmail", emailVisit)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String value = document.get("Prompt").toString();
+                                System.out.println("searchForUser: " + value);
+                                promptAdapter.add(value);
+                            }
+                        } else {
+                            // Handle errors
+                            System.out.println("searchForUser: " + "Has no Documents");
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("searchForUser", "Failed", e);
+                    }
+                });
+    }
+
+
+    
+
 
 
 

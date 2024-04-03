@@ -9,23 +9,41 @@
     android:checkable="true"
     app:cardCornerRadius="15dp">
 
-    <!-- Content for the card view -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
-        <!-- TextView for displaying data -->
-        <TextView
-            android:id="@+id/EmailTextView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:text="Data Placeholder" />
+            android:orientation="horizontal"
+            android:padding="16dp">
 
-        <!-- Add more views as needed for additional data display -->
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/solaruserroundedboldduotone"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="User Profile"/>
+
+
+            <!-- TextView for displaying data -->
+            <TextView
+                android:id="@+id/EmailTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:text="Data Placeholder"
+                android:fontFamily="@font/poppins_extralight"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
