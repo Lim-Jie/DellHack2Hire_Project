@@ -1,5 +1,6 @@
 package com.example.dellhack2hire_1;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -57,12 +62,30 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                         String data = dataList.get(position);
 
                         Toast.makeText(itemView.getContext(), "Clicked item: " + data, Toast.LENGTH_SHORT).show();
-
-
+                        moveToAnotherFragment(data);
 
                     }
                 }
             });
+        }
+
+        private void moveToAnotherFragment(String data) {
+            // Create a new instance of the fragment you want to move to
+            OnBoarders onBoarders= new OnBoarders(data);
+            // Pass data to the fragment using arguments
+            Bundle bundle = new Bundle();
+            bundle.putString("DATA_KEY", data);
+            onBoarders.setArguments(bundle);
+            // Get the FragmentManager
+            FragmentManager fragmentManager = ((FragmentActivity)itemView.getContext()).getSupportFragmentManager();
+            // Begin a transaction
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            // Replace the current fragment with the new one
+            fragmentTransaction.replace(R.id.FragmentContainerMain, onBoarders);
+            // Add transaction to the back stack (optional)
+            fragmentTransaction.addToBackStack(null);
+            // Commit the transaction
+            fragmentTransaction.commit();
         }
     }
 }
