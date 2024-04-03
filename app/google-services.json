@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "992824564734",
+    "project_id": "hill-top-coders",
+    "storage_bucket": "hill-top-coders.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:992824564734:android:9cdc556dd75cbe94fa7eaf",
+        "android_client_info": {
+          "package_name": "com.example.dellhack2hire_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDY3k2zrKRgaBdlM5zKMm_25mDEFxmkLTc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
