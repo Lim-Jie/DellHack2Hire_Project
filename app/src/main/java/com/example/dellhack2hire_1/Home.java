@@ -31,7 +31,7 @@ public class Home extends Fragment {
     FirebaseAuth firebaseAuth;
 //    Button logoutButton;
     public String currentEmail;
-    List<String> listOfNames;
+    List<List<String>> listOfNames;
 
 
     @Override
@@ -54,9 +54,8 @@ public class Home extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         LoadData(new OnDataLoadedListener() {
             @Override
-            public void onDataLoaded(List<String> documentIds) {
+            public void onDataLoaded(List<List<String>> documentIds) {
                 listOfNames = documentIds;
-
                 // Initialize RecyclerView adapter with loaded data
                 MyAdapter adapter = new MyAdapter(listOfNames);
                 recyclerView.setAdapter(adapter);
@@ -92,7 +91,7 @@ public class Home extends Fragment {
     }
 
     public interface OnDataLoadedListener {
-        void onDataLoaded(List<String> documentIds);
+        void onDataLoaded(List<List<String>> documentIds);
     }
 
     public void LoadData(OnDataLoadedListener listener) {
@@ -100,18 +99,31 @@ public class Home extends Fragment {
                 .whereEqualTo("Role", "ON")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    List<String> documentIds = new ArrayList<>();
+                    List<List<String>> dataList = new ArrayList<>();
                     for (DocumentSnapshot document : queryDocumentSnapshots) {
                         String documentId = document.getId();
-                        documentIds.add(documentId);
+                        String progress = document.getString("Progress");
+                        String submission = document.getString("Submissions");
+
+                        // Add document ID, progress, and submission to a list
+                        List<String> documentData = new ArrayList<>();
+                        documentData.add(documentId);
+                        documentData.add(progress);
+                        documentData.add(submission);
+
+                        // Add this list to the main data list
+                        dataList.add(documentData);
                     }
-                    listener.onDataLoaded(documentIds); // Callback to update ListNames
+                    listener.onDataLoaded(dataList); // Callback to update List<List<String>>
                 })
                 .addOnFailureListener(e -> {
                     // Handle any errors
                     Log.e("Firestore", "Error getting documents: ", e);
                 });
     }
+
+
+
 
 
 

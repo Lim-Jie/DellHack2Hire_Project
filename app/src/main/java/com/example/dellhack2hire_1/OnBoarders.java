@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,7 +49,7 @@ public class OnBoarders extends Fragment {
         View view=  inflater.inflate(R.layout.fragment_on_boarders, container, false);
         Firestore = FirebaseFirestore.getInstance();
 
-        listView = view.findViewById(R.id.listView);
+        listView = view.findViewById(R.id.OnboardersUserDetails);
         prompt_listView=  view.findViewById(R.id.prompt_listView);
         dataList = new ArrayList<>();
         queryDocumentSnapshots = new ArrayList<>();
@@ -141,7 +142,7 @@ public class OnBoarders extends Fragment {
     }
 
 
-    
+
 
 
 
